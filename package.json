@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server:testNet": "node dist/server/TestNet.js",
-    "server:client": "node dist/server/Node.js $PORT",
+    "server:client": "node dist/server/Client.js $PORT",
     "build": "tsc",
     "test": "mocha -r ts-node/register test/**/*.ts"
   },
