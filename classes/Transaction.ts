@@ -11,15 +11,15 @@ export default class Transaction {
     this.timestamp = timestamp
   }
 
-  getFromAddress () {
+  getFromAddress (): string {
     return this.from
   }
 
-  getToAddress () {
+  getToAddress (): string {
     return this.to
   }
 
-  getAmount () {
+  getAmount (): number {
     return this.amount
   }
 }
