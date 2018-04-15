@@ -4,19 +4,25 @@
 - nodejs
 
 ## 서버 실행 방법
-1. git clone <현재패키지>
-2. npm i 
-3. npm run build
+
+```bash 
+> git clone <현재패키지>
+> npm i 
+> npm run build
+```
 
 ### 테스트 넷 실행
--  npm run server:testNet
+```bash
+> npm run server:testNet
+```
 
 브라우져의 `http://localhost:3000` 에서 확인
 
 ### 노드 서버 실행
 채굴을 할 노드서버를 실행
-- npm run server:client <포트번호>
-
+```bash
+> npm run server:client <포트번호>
+```
 
 ## 페이지 설명
 
