@@ -1,0 +1,48 @@
+<%- include partial/header.ejs %>
+<div class="row">
+    <div class="col-md-6">
+        <h1>Main</h1>
+        <p>노드 등록 페이지</p>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form class="form">
+            <div class="form-group col-md-12">
+                <label class="sr-only" for="password-input">password</label>
+                <input type="password" class="form-control mb-2 mr-sm-2 mb-sm-0" id="password-input"
+                       placeholder="password">
+            </div>
+            <div class="form-group col-md-12">
+                <label class="sr-only" for="port-input">port</label>
+                <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="port-input" placeholder="port number">
+            </div>
+            <div class="form-group col-md-12">
+                <button class="register-btn form-control btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+  $('.register-btn').click(e => {
+    e.preventDefault()
+    $.ajax({
+        url: '/nodes/register',
+        method: 'POST',
+        data: {
+          password: $('#password-input').val(),
+          port: $('#port-input').val()
+        }
+      })
+      .done(result => {
+        alert(result.msg)
+      })
+  })
+
+</script>
+
+<%- include partial/footer.ejs %>

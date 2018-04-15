@@ -1,0 +1,104 @@
+<%- include partial/header.ejs %>
+<div class="row">
+    <h2>송금</h2>
+
+    <form class="form-inline">
+        <label class="sr-only" for="inlineFormInput">From</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="from-input" placeholder="from address">
+        <label class="sr-only" for="inlineFormInput">To</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="to-input" placeholder="to address">
+        <label class="sr-only" for="inlineFormInput">Amount</label>
+        <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="amount-input" placeholder="amount to send">
+        <button class="transaction-btn form-control btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<div class="row">
+    <h2>노드 목록</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>주소</th>
+            <th>자산</th>
+            <th>채굴중</th>
+            <th>start nonce</th>
+            <th>set nonce</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% nodes.forEach(node => { %>
+        <tr>
+            <td><%= node.wallet.address %></td>
+            <td><%= node.wallet.balance %></td>
+            <td>
+                <input type="hidden" data-address="<%= node.wallet.address %>">
+                <input type="checkbox" <%- (node.isMinerFlag) ? 'checked' : '' %> data-toggle="toggle"
+                       class="change-mining-status" onchange='changeMiningStatus(this)'>
+            </td>
+            <td><%= node.startNonce %></td>
+            <td>
+                <input type="hidden" data-address="<%= node.wallet.address %>">
+                <input type="number" id="nonce-input" class="form-control"/>
+                <button class="form-control btn btn-warning change-nonce-btn" onclick="changeNonce(this)">update</button>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<script>
+  $('.transaction-btn').click(e => {
+    e.preventDefault()
+    $.ajax({
+        url: '/transactions',
+        method: 'POST',
+        data: {
+          from: $('#from-input').val(),
+          to: $('#to-input').val(),
+          amount: Number($('#amount-input').val()),
+        }
+      })
+      .done(result => {
+        alert(result.msg)
+      })
+  })
+
+  function changeMiningStatus (e) {
+    const target = e
+    const address = target.parentElement.previousElementSibling.getAttribute('data-address')
+
+
+    $.ajax({
+        url: '/nodes/' + address + '/mine/status',
+        method: 'PUT',
+        data: {
+          isMining: (target.checked) ? 'Y' : 'N'
+        }
+      })
+      .done(result => {
+        console.log(result.msg)
+      })
+  }
+
+  function changeNonce (e) {
+    const target = e
+    const nonce = Number(target.previousElementSibling.value)
+    const address = target.previousElementSibling.previousElementSibling.getAttribute('data-address')
+
+    $.ajax({
+        url: '/nodes/' + address + '/nonce',
+        method: 'PUT',
+        data: {
+          nonce
+        }
+      })
+      .done(result => {
+        alert(result.msg)
+        location.reload()
+      })
+
+  }
+
+</script>
+<%- include partial/footer.ejs %>
