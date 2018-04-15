@@ -6,7 +6,7 @@
 ## 서버 실행 방법
 
 ```bash 
-> git clone <현재패키지>
+> git clone git@github.com:jindev/powTs.git
 > npm i 
 > npm run build
 ```
