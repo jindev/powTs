@@ -2,7 +2,6 @@ import { expect } from 'chai'
 import BlockChain from '../../classes/BlockChain'
 import Block from '../../classes/Block'
 import Node from '../../classes/Node'
-import { Wallet } from '../../classes/Wallet'
 
 describe('Node', function () {
   const blockChain = new BlockChain()
