@@ -3,15 +3,17 @@ import BlockChainService from '../../services/BlockChainService'
 import BlockChain from '../../classes/BlockChain'
 import Node from '../../classes/Node'
 import Block from '../../classes/Block'
+import Transaction from '../../classes/Transaction'
 
 describe('BlockChainService', function () {
+  const blockChain = BlockChainService.getBlockChain()
+
   before(done => {
     blockChain.addNode(new Node({password: '1234', port: 7888, blockChain}))
     blockChain.addNode(new Node({password: '4444', port: 7889, blockChain}))
     done()
   })
 
-  const blockChain = BlockChainService.getBlockChain()
   describe('getBlockChain', () => {
     it('should get blockChain instance', done => {
       expect(blockChain).to.be.instanceOf(BlockChain)
@@ -44,11 +46,13 @@ describe('BlockChainService', function () {
     it('should add new block', done => {
       const baseAddress = blockChain.getNodeByPassword('1234').getWalletAddress()
       const previousHash = blockChain.getLatestBlock().getHash()
-      BlockChainService.newBlockCreated({block: new Block({
-        timestamp: new Date(),
-        transactions: [],
-        previousHash
-      }), baseAddress})
+      BlockChainService.newBlockCreated({
+        block: new Block({
+          timestamp: new Date(),
+          transactions: [],
+          previousHash
+        }), baseAddress
+      }, new Transaction({from: 1234, to: 333, amount: 100, timestamp: new Date()}))
 
       expect(blockChain.getLatestBlock().getPreviousHash()).to.be.equal(previousHash)
       expect(blockChain.getPendingTransactions().length).to.be.equal(1)
