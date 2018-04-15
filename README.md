@@ -7,6 +7,7 @@
 
 ```bash 
 > git clone git@github.com:jindev/powTs.git
+> cd powTs
 > npm i 
 > npm run build
 ```
