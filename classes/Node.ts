@@ -1,7 +1,6 @@
 import { Wallet } from './Wallet'
 import BlockChain from './BlockChain'
 import Block from './Block'
-import { NodeConstructParams } from '../interfaces/Node'
 
 export default class Node {
   private isMinerFlag: boolean
@@ -11,7 +10,7 @@ export default class Node {
   private port: number
   private startNonce: number
 
-  constructor ({password, port, blockChain, startNonceNum = 0}: NodeConstructParams) {
+  constructor ({password, port, blockChain, startNonceNum = 0}) {
     this.isMinerFlag = false
     this.isParticipating = false
     this.wallet = blockChain.getNewWallet({password})
