@@ -1,4 +1,4 @@
-# Proof of Word - typescript
+# Proof of Work - typescript
 
 ## 필수 설치
 - nodejs
